@@ -60,6 +60,8 @@ const ScheduleForm = (props) => {
         <div>
             <div>
                 {props.name}
+                <Schedule/>
+                <AddScheduleButton/>
             </div>
         </div>
     )

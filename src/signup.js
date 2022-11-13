@@ -1,8 +1,11 @@
 import React, {useState} from "react";
 import Button from "./component/button";
+import { useNavigate } from "react-router-dom";
 
 
 const SignUpForm = () => {
+    let navigate = useNavigate();
+
     const [values, setValues ] = useState({
         firstname: "",
         lastname: "",
@@ -18,7 +21,7 @@ const SignUpForm = () => {
 
     const handleFormSubmit = (event) => {
         event.preventDefault();
-        console.log("hello")
+        navigate("/AddSchedulePage", { replace: true });
     }
 
 

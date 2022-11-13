@@ -2,7 +2,9 @@ import React from "react";
 import Button from "../component/button";
 import ScheduleForm from "../component/scheduleForm";
 
+
 class AddSchedulePage extends React.Component {
+
     render() {
         return (
             <div>
