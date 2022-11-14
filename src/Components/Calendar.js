@@ -4,7 +4,7 @@ import Scheduler, {Resource} from 'devextreme-react/scheduler';
 
 let data = [
     {
-      text: 'Website Re-Design Plan',
+      text: 'I',
       startDate: new Date('2022-11-13T16:30:00.000Z'),
       endDate: new Date('2022-11-13T18:30:00.000Z'),
     }, {
