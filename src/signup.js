@@ -25,7 +25,7 @@ const SignUpForm = () => {
         event.preventDefault();
         // navigate("/AddSchedulePage", { replace: true });
         try {
-            let res = await fetch("http://127.0.0.1:5000/users/signup", {
+            let res = await fetch("http://ec2-44-206-245-116.compute-1.amazonaws.com:5000/users/signup", {
                 method: "POST",
                 body: JSON.stringify({
                     first_name: values.firstname,
