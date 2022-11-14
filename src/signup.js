@@ -9,6 +9,8 @@ const SignUpForm = () => {
     const [values, setValues] = useState({
         firstname: "",
         lastname: "",
+        username: "",
+        password: "",
         email: ""
     });
 
@@ -25,12 +27,11 @@ const SignUpForm = () => {
         try {
             let res = await fetch("http://127.0.0.1:5000/users/signup", {
                 method: "POST",
-                // headers: {
-                //     "Content-Type": "application/json; charset=utf-8"
-                // },
                 body: JSON.stringify({
                     first_name: values.firstname,
                     last_name: values.lastname,
+                    username: values.username,
+                    password: values.password,
                     email: values.email
                 }),
             });
@@ -66,6 +67,26 @@ const SignUpForm = () => {
                             type="text"
                             name="lastname"
                             value={values.lastname}
+                            onChange={handleChange}
+                        />
+                    </div>
+                    <div>
+                        <label> User Name </label>
+                        <input
+                            className="input"
+                            type="text"
+                            name="username"
+                            value={values.user_name}
+                            onChange={handleChange}
+                        />
+                    </div>
+                    <div>
+                        <label> Password </label>
+                        <input
+                            className="input"
+                            type="text"
+                            name="password"
+                            value={values.password}
                             onChange={handleChange}
                         />
                     </div>
