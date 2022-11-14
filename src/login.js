@@ -1,6 +1,9 @@
 import React, { useState } from "react";
-import Button from "./component/button";
 import { useNavigate } from "react-router-dom";
+import { Page } from './chrome/Page';
+import { TextField, InputLabel, Button } from '@mui/material';
+
+
 
 
 const LoginForm = () => {
@@ -35,6 +38,7 @@ const LoginForm = () => {
         catch (err) {
             console.log(err);
         }
+        navigate('/calendar');
     }
 
 
@@ -45,8 +49,8 @@ const LoginForm = () => {
                 </div>
                 <form>
                     <div>
-                        <label> Email </label>
-                        <input
+                        <InputLabel> Email </InputLabel>
+                        <TextField
                             className="input"
                             type="text"
                             name="email"
@@ -55,8 +59,8 @@ const LoginForm = () => {
                         />
                     </div>
                     <div>
-                        <label> Password </label>
-                        <input
+                        <InputLabel> Password </InputLabel>
+                        <TextField
                             className="input"
                             type="text"
                             name="password"
@@ -65,13 +69,24 @@ const LoginForm = () => {
                         />
                     </div>
                     <div>
-                        {/* <button 
-                        className="submit" onClick = {handleFormSubmit}> Sign Up </button> */}
-                        <Button handleClick={handleFormSubmit} buttonLabel="Log In"></Button>
+                        <Button
+                        component="label"
+                        color="primary"
+                        onClick={handleFormSubmit}
+                        >LogIn</Button>
+                        <Button component="label" color="primary" onClick={() => navigate('/')}>
+                            Signup
+                        </Button>
                     </div>
                 </form>
             </div>
         );
     }
 
-    export default LoginForm;
+    // export default LoginForm;
+
+    export const LoginPage = () => (
+        <Page title="Login" maxWidth="lg">
+          <LoginForm />
+        </Page>
+      );
