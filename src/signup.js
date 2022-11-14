@@ -62,8 +62,6 @@ const SignUpForm = () => {
                     />
                 </div>
                 <div>
-                    {/* <button 
-                        className="submit" onClick = {handleFormSubmit}> Sign Up </button> */}
                     <Button handleClick = {handleFormSubmit} buttonLabel = "Sign Up"></Button>
                 </div>
             </form>
