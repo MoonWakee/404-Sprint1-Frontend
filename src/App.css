@@ -1,38 +1,67 @@
 .App {
-  text-align: center;
+  width: 100vw;
+  height: 900;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+body {
+  margin: 0;
+  padding: 0;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.Sidebar {
+  height: 900;
+  width: 20%;
+  background-color: #5A5A5A;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.SidebarList {
+  height: auto;
+  padding: 0;
+  width: 100%;
+}
+
+.SidebarList .row {
+  width: 100%;
+  height: 50px;
+  list-style-type: none;
+  margin: 0%;
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
+  flex-direction: row;
   color: white;
+  justify-content: center;
+  align-items: center;
 }
 
-.App-link {
-  color: #61dafb;
+.SidebarList .row:hover {
+  cursor: pointer;
+  background-color: darkgoldenrod;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.SidebarList #active {
+  background-color: darkgoldenrod;
 }
+
+.container {
+  display: flex;
+  flex: 1;
+}
+
+.row #icon {
+  flex: 30%;
+  display: grid;
+  place-items: center;
+}
+
+.row #name {
+  flex: 70%;
+}
+
+.Calendar {
+  width: 100%;
+  height: 100vh;
+  overflow-y: scroll;
+}
+
+/* .dx-toolbar-items-container {
+  display: none;
+} */
