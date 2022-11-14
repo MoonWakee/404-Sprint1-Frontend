@@ -3,6 +3,7 @@ import './App.css';
 import SignUpForm from './signup';
 import AddSchedulePage from './pages/addSchedulePage';
 import {BrowserRouter as Router, Routes , Route} from 'react-router-dom';
+import LoginForm from './login';
 
 // function App() {
 //   return (
@@ -30,6 +31,7 @@ function App() {
     <Router>
         <Routes>
           <Route path = "/" element = {<SignUpForm/>} />
+          <Route path = "/login" element = {<LoginForm/>} />
           <Route path="/AddSchedulePage" element = {<AddSchedulePage /> } />
         </Routes>
     </Router>
