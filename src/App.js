@@ -3,7 +3,7 @@ import './App.css';
 import SignUpForm from './signup';
 import AddSchedulePage from './pages/addSchedulePage';
 import {BrowserRouter as Router, Routes , Route} from 'react-router-dom';
-import GroupForm from './pages/addGroup';
+import CreateGroup from './pages/addGroup';
 
 // function App() {
 //   return (
@@ -32,7 +32,7 @@ function App() {
         <Routes>
           <Route path = "/" element = {<SignUpForm/>} />
           <Route path="/AddSchedulePage" element = {<AddSchedulePage /> } />
-          <Route path= "/GroupForm" element = {<GroupForm/>}/>
+          <Route path= "/CreateGroup" element = {<CreateGroup/>}/>
         </Routes>
     </Router>
   );
