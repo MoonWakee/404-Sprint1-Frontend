@@ -1,6 +1,8 @@
 import React, { useState } from "react";
-import Button from "./component/button";
 import { useNavigate } from "react-router-dom";
+import { Page } from './chrome/Page';
+import { TextField, InputLabel, Button, Grid } from '@mui/material';
+
 
 
 const SignUpForm = () => {
@@ -24,7 +26,7 @@ const SignUpForm = () => {
     const handleFormSubmit = async (event) => {
         event.preventDefault();
         try {
-            let res = await fetch("http://127.0.0.1:5000/users/signup", {
+            let res = await fetch("http://ec2-44-206-245-116.compute-1.amazonaws.com:5000/users/signup", {
                 method: "POST",
                 body: JSON.stringify({
                     first_name: values.firstname,
@@ -40,74 +42,91 @@ const SignUpForm = () => {
         catch (err) {
             console.log(err);
         }
-        navigate("/", { replace: true });
+        navigate('/login');
     }
 
 
     return (
+        <div>
             <div>
-                <div>
-                    <h2 className="title"> Create Account </h2>
-                </div>
-                <form>
-                    <div>
-                        <label> First Name </label>
-                        <input
-                            className="input"
-                            type="text"
-                            name="firstname"
-                            value={values.firstname}
-                            onChange={handleChange}
-                        />
-                    </div>
-                    <div>
-                        <label> Last Name </label>
-                        <input
-                            className="input"
-                            type="text"
-                            name="lastname"
-                            value={values.lastname}
-                            onChange={handleChange}
-                        />
-                    </div>
-                    <div>
-                        <label> User Name </label>
-                        <input
-                            className="input"
-                            type="text"
-                            name="username"
-                            value={values.user_name}
-                            onChange={handleChange}
-                        />
-                    </div>
-                    <div>
-                        <label> Password </label>
-                        <input
-                            className="input"
-                            type="text"
-                            name="password"
-                            value={values.password}
-                            onChange={handleChange}
-                        />
-                    </div>
-                    <div>
-                        <label> Email </label>
-                        <input
-                            className="input"
-                            type="text"
-                            name="email"
-                            value={values.email}
-                            onChange={handleChange}
-                        />
-                    </div>
-                    <div>
-                        {/* <button 
-                        className="submit" onClick = {handleFormSubmit}> Sign Up </button> */}
-                        <Button handleClick={handleFormSubmit} buttonLabel="Sign Up"></Button>
-                    </div>
-                </form>
+                <h2 className="title"> Create Account </h2>
             </div>
-        );
-    }
+            <form>
+                <div>
+                    <InputLabel> Email </InputLabel>
+                    <TextField
+                        className="input"
+                        type="text"
+                        name="email"
+                        value={values.email}
+                        onChange={handleChange}
+                    />
+                </div>
+                <div>
+                    <Grid container>
+                        <Grid item>
+                            <InputLabel> First Name </InputLabel>
+                            <TextField
+                                className="input"
+                                type="text"
+                                name="firstname"
+                                value={values.firstname}
+                                onChange={handleChange}
+                            />
+                        </Grid>
+                        <br />
+                        <Grid item>
+                            <InputLabel> Last Name </InputLabel>
+                            <TextField
+                                className="input"
+                                type="text"
+                                name="lastname"
+                                value={values.lastname}
+                                onChange={handleChange}
+                            />
+                        </Grid>
+                    </Grid>
+                </div>
+                <div>
+                    <Grid container>
+                        <Grid item>
+                            <InputLabel> User Name </InputLabel>
+                            <TextField
+                                className="input"
+                                type="text"
+                                name="username"
+                                value={values.user_name}
+                                onChange={handleChange}
+                            />
+                        </Grid>
+                        <Grid item>
+                            <InputLabel> Password </InputLabel>
+                            <TextField
+                                className="input"
+                                type="text"
+                                name="password"
+                                value={values.password}
+                                onChange={handleChange}
+                            />
+                        </Grid>
+                    </Grid>
+                </div>
+                <div>
+                    {/* <button 
+                        className="submit" onClick = {handleFormSubmit}> Sign Up </button> */}
+                    <Button
+                        variant="contained"
+                        component="label"
+                        color="primary"
+                        onClick={handleFormSubmit}>Sign Up</Button>
+                </div>
+            </form>
+        </div>
+    );
+}
 
-    export default SignUpForm;
+export const SignUpPage = () => (
+    <Page title="Sign Up" maxWidth="lg">
+        <SignUpForm />
+    </Page>
+);
