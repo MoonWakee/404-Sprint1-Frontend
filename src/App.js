@@ -1,17 +1,17 @@
-import logo from './logo.svg';
 import './App.css';
 import SignUpForm from './signup';
 import AddSchedulePage from './pages/addSchedulePage';
 import {BrowserRouter as Router, Routes , Route} from 'react-router-dom';
-import CreateGroup from './pages/addGroup';
+import CreateGroup from './pages/Groups/addGroup';
+import LoginForm from './pages/login';
 
 
 function App() {
   return(
     <Router>
         <Routes>
-          <Route path = "/" element = {<SignUpForm/>} />
-          <Route path = "/Login" element = {<LoginForm/>} />
+          <Route path = "/" element = {<LoginForm/>} />
+          <Route path = "/Signup" element = {<SignUpForm/>} />
           <Route path="/AddSchedulePage" element = {<AddSchedulePage /> } />
           <Route path= "/CreateGroup" element = {<CreateGroup/>}/>
         </Routes>

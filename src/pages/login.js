@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import Button from "./component/button";
+import Button from "../component/button";
 import { useNavigate } from "react-router-dom";
 
 
@@ -40,6 +40,9 @@ const LoginForm = () => {
         }
     }
 
+    const handleSignup = () => {
+        navigate("/", { replace: true });
+    }
 
     return (
             <div>
@@ -70,9 +73,12 @@ const LoginForm = () => {
                     <div>
                         <Button handleClick={handleFormSubmit} buttonLabel="Login"></Button>
                     </div>
+                    <div>
+                        <Button handleClick={handleSignup} buttonLabel="Sign Up"></Button>
+                    </div>
                 </form>
             </div>
         );
     }
 
-    export default LoginForm;
+export default LoginForm;

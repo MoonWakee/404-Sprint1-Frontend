@@ -23,7 +23,6 @@ const SignUpForm = () => {
 
     const handleFormSubmit = async (event) => {
         event.preventDefault();
-        // navigate("/AddSchedulePage", { replace: true });
         try {
             let res = await fetch("http://127.0.0.1:5000/users/signup", {
                 method: "POST",
@@ -41,6 +40,7 @@ const SignUpForm = () => {
         catch (err) {
             console.log(err);
         }
+        navigate("/", { replace: true });
     }
 
 
