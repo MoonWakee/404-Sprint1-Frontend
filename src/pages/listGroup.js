@@ -1,8 +1,13 @@
 import React, { useState, useEffect } from "react";
+import { Button } from "devextreme-react";
+import { useNavigate } from "react-router-dom";
 import authHeader from "../utils/authHeader";
 
 const ListGroupPage = () => {
+  let navigate = useNavigate();
+
   const [groupList, setGroupList] = useState([]);
+  const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
     const fetchGroups = async () => {
@@ -40,6 +45,10 @@ const ListGroupPage = () => {
     </ul>
     );
 
+    const onClick = () => {
+      navigate('/group/addgroup')
+    }
+
   return (
     <div>
         <div>
@@ -47,6 +56,14 @@ const ListGroupPage = () => {
         </div>
         <div>
             {group_items}
+        </div>
+        <div>
+          <Button
+            color="primary"
+            onClick={onClick}
+            >
+            Create Group
+          </Button>
         </div>
     </div>
 

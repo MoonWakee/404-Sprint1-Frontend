@@ -1,15 +1,13 @@
 import React, { useState } from "react"; 
 import { useNavigate } from "react-router-dom";
 import { TextField, InputLabel, Button } from '@mui/material';
-import authHeader from "./utils/authHeader";
+import authHeader from "../utils/authHeader";
 
 const AddGroupForm = () => {
     let navigate = useNavigate();
 
     const [values, setValues] = useState({
         groupname: "",
-        members: [],
-        new: ""
     });
 
     const handleChange = (event) => {
@@ -19,21 +17,8 @@ const AddGroupForm = () => {
             });
         }
 
-    const handleAddMember = () => {
-        setValues({
-            ...values,
-            members: [...values.members, values.new],
-            new: ""
-        })
-    }
-
-    const membersList = values.members.map((member) =>
-        <li key= {member}>{member}</li>
-    );
 
     const handleFormSubmit = async (event) => {
-        console.log(values.groupname)
-        console.log(values.members)
         event.preventDefault();
         try {
             const headers = {
@@ -53,7 +38,7 @@ const AddGroupForm = () => {
         catch (err) {
             console.log(err);
         }
-        navigate('/calendar');
+        navigate('/listGroup');
     }
 
 
@@ -74,33 +59,12 @@ const AddGroupForm = () => {
                         />
                     </div>
                     <div>
-                        Group Members
-                    </div>
-                    <div>
-                        {membersList}
-                    </div>
-                    <div>
-                        <TextField
-                            className="input"
-                            type="text"
-                            name="new"
-                            value={values.new}
-                            onChange = {handleChange}
-                        />
-                    </div>
-                    <div>
-                        <Button
-                        component="label"
-                        color="primary"
-                        onClick={handleAddMember}
-                        >Add Member</Button>
-                    </div>
-                    <div>
                         <Button
                         component="label"
                         color="primary"
                         onClick={handleFormSubmit}
-                        >Create Group</Button>
+                        >Create Group
+                        </Button>
                     </div>
                 </form>
             </div>
