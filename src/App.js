@@ -9,8 +9,8 @@ import {BrowserRouter as Router, Routes , Route, useParams} from 'react-router-d
 import {LoginPage} from './login';
 import {SignUpPage} from './signup';
 import {CalendarPage} from './Calendar';
-import { EditGroupPage } from './pages/editGroup';
 import ListGroupPage from './pages/listGroup';
+import GroupPage from './pages/groupPage';
 
 
 function App() {
@@ -21,8 +21,8 @@ function App() {
           <Route path = "/calendar" element = {<CalendarPage/>} />
           <Route path = "/signup" element = {<SignUpPage/>} />
           <Route path="/AddSchedulePage" element = {<AddSchedulePage /> } />
-          <Route path="/addGroup" element = {<AddGroupPage /> } />
-          <Route path="/group/:groupid" element = {<EditGroupPage/> } />
+          <Route path="/addGroup" element = {< AddGroupPage /> } />
+          <Route path="/group/:id" element = {< GroupPage/> } />
           <Route path="/listGroup" element = { <ListGroupPage/> } />
         </Routes>
     </Router>
