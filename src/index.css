@@ -16,6 +16,3 @@ code {
     monospace;
 }
 
-div.dx-toolbar-items-container {        /* this will hide div with id div_id_name */
-  display:none;
-}
