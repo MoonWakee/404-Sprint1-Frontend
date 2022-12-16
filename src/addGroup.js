@@ -36,12 +36,15 @@ const AddGroupForm = () => {
         console.log(values.members)
         event.preventDefault();
         try {
-            let res = await fetch("http://127.0.0.1:5000/group/add", {
+            const headers = {
+                ...authHeader(), 
+                Accept: 'application/json',
+            }
+            let res = await fetch("http://127.0.0.1:5000/api/group/", {
                 method: "POST",
-                headers: authHeader(),
+                headers: headers,
                 body: JSON.stringify({
-                    groupname: values.groupname,
-                    members: values.members
+                    groupname: values.groupname
                 }),
             });
             let resJson = await res.json();
