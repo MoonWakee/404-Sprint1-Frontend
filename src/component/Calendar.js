@@ -20,7 +20,10 @@ const addSchedule = async (
   schedule_name,
   start_time,
   end_time,
-  description
+  description,
+  all_day,
+  recurrence_rule,
+  meta_data
 ) => {
   try {
     let res = await fetch("http://127.0.0.1:5000/api/schedule/", {
@@ -34,6 +37,9 @@ const addSchedule = async (
         start_time: start_time,
         end_time: end_time,
         description: description,
+        all_day: all_day,
+        recurrence_rule: recurrence_rule,
+        meta_data: meta_data
       }),
     });
   } catch (err) {
@@ -64,23 +70,26 @@ const getData = async () => {
 const onAppointmentAdding = (e) => {
   console.log(e)
   var words = JSON.stringify(e.appointmentData.startDate);
+  var meta_data = words + ';'
   var date = words.substring(1, 11);
   var time = words.substring(12, 20);
   const start_time = date + " " + time;
 
   words = JSON.stringify(e.appointmentData.endDate);
+  meta_data = meta_data + words
   date = words.substring(1, 11);
   time = words.substring(12, 20);
   const end_time = date + " " + time;
 
   var description = JSON.stringify(e.appointmentData.description);
   description = description.substring(1, description.length - 1);
-  console.log(description);
   var schedule_name = JSON.stringify(e.appointmentData.text);
   schedule_name = schedule_name.substring(1, schedule_name.length - 1);
-  console.log(schedule_name);
-
-  //addSchedule(schedule_name, start_time, end_time, description)
+  var all_day = e.appointmentData.allDay
+  var recurrence_rule = JSON.stringify(e.appointmentData.recurrenceRule)
+  recurrence_rule = recurrence_rule.substring(1, recurrence_rule.length -1)
+  console.log(meta_data)
+  addSchedule(schedule_name, start_time, end_time, description, all_day, recurrence_rule, meta_data)
 };
 
 const onAppointmentUpdating = (e) => {
