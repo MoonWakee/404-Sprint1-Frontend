@@ -7,8 +7,8 @@ import Calendar from './component/Calendar';
 const CalendarForm = () => {
     
     return <div className="App">
-      <div className='container'>
-        <Sidebar />
+      <div className='grid place-items-center h-screen'>
+        {/* <Sidebar /> */}
         <Calendar />
       </div>
     </div>;
