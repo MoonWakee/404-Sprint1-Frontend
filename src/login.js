@@ -34,7 +34,7 @@ const LoginForm = () => {
       if (resJson.token) {
         localStorage.setItem("user", JSON.stringify(resJson))
       }
-      console.log(resJson);
+      console.log(resJson)
     } catch (err) {
       console.log(err);
     }
