@@ -16,7 +16,7 @@ class ListGroup extends React.Component {
     
     async componentDidMount() {
         try {
-            let res = await fetch("http://127.0.0.1:5000/group/list",
+            let res = await fetch("http://127.0.0.1:5000/api/group/list",
             {
                 method: "GET",
                 headers: authHeader()
