@@ -1,7 +1,9 @@
 import { Button } from "devextreme-react";
 import React from "react";
-import { json } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import { TextField } from "@mui/material";
 import authHeader from "../utils/authHeader";
+
 
 
 const List = ({ list, onRemove }) => (
@@ -16,7 +18,7 @@ const Item = ({ item, onRemove }) => (
 <li>
     <span>{item}</span>
     <button type="button" onClick={() => onRemove(item)}>
-    Remove
+        Remove
     </button>
 </li>
 );
@@ -27,14 +29,15 @@ class EditGroup extends React.Component {
     constructor(props) {
         super(props);
       
-        // Initializing the state 
         this.state = { groupname: '', members: [], new: '' };
       }
     
     
     async componentDidMount() {
         try {
-            let res = await fetch("http://127.0.0.1:5000/group/:groupid", {
+            let res = await fetch(
+                "http://ec2-44-206-245-116.compute-1.amazonaws.com:5000/group/:groupid", 
+                {
                 method: "GET",
                 headers: authHeader()
             });
@@ -49,7 +52,9 @@ class EditGroup extends React.Component {
     
     handleDeleteGroup = async () => {
         try {
-            let res = await fetch("http://127.0.0.1:5000/group/:groupid", {
+            let res = await fetch(
+                "http://ec2-44-206-245-116.compute-1.amazonaws.com:5000/group/:groupid", 
+                {
                 method: "DELETE",
                 headers: authHeader()
             });
@@ -59,12 +64,13 @@ class EditGroup extends React.Component {
         catch (err) {
             console.log(err);
         }
-        navigate('/calendar');
+        this.navigate('/calendar');
     }
 
     handleUpdateGroup = async() => {
         try {
-            let res = await fetch("http://127.0.0.1:5000/group/:groupid", {
+            let res = await fetch("http://ec2-44-206-245-116.compute-1.amazonaws.com:5000/group/:groupid", 
+            {
                 method: "PUT",
                 headers: authHeader(),
                 body: JSON.stringify({
@@ -78,23 +84,17 @@ class EditGroup extends React.Component {
         catch (err) {
             console.log(err);
         }
-        navigate('/calendar');
+       this.navigate('/calendar');
     }
 
 
     handleChange = (event) => {
-        setValues({
-            ...values,
-            [event.target.name]: event.target.value,
-        });
+        this.setState({ [event.target.name]: event.target.value})
+
     }
 
-    handleAddMember = () => {
-        setValues({
-            ...values,
-            members: [...values.members, values.new],
-            new: ""
-        })
+    handleAddMember() {
+        this.setState({ members: [...this.state.members, this.state.new]})
     }
 
     handleRemove(member) {
@@ -110,35 +110,35 @@ class EditGroup extends React.Component {
                     {this.state.groupname}
                 </div>
                 <div>
-                    <List list={this.state.members} onRemove={handleRemove} />
+                    <List list={this.state.members} onRemove={this.handleRemove} />
                 </div>
                 <div>
                     <TextField
                         className="input"
                         type="text"
                         name="new"
-                        value={values.new}
-                        onChange = {handleChange}
+                        value={this.state.new}
+                        onChange = {this.handleChange}
                     />
                     <div>
                         <Button
                         component="label"
                         color="primary"
-                        onClick={handleAddMember}
+                        onClick={this.handleAddMember}
                         >Add Member</Button>
                     </div>
                     <div>
                         <Button
                         component="label"
                         color="primary"
-                        onClick={handleDeleteGroup}
+                        onClick={this.handleDeleteGroup}
                         >Delete Group</Button>
                     </div>
                     <div>
                         <Button
                         component="label"
                         color="primary"
-                        onClick={handleUpdateGroup}
+                        onClick={this.handleUpdateGroup}
                         >Update Group</Button>
                     </div>  
                 </div>
@@ -148,3 +148,7 @@ class EditGroup extends React.Component {
         )
     }
 }
+
+export const EditGroupPage = () => (
+    < EditGroup />
+);

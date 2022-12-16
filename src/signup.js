@@ -23,7 +23,7 @@ const SignUpForm = () => {
 
   const handleFormSubmit = async (event) => {
     event.preventDefault();
-    // navigate("/AddSchedulePage", { replace: true });
+
     try {
       let res = await fetch(
         "http://ec2-44-206-245-116.compute-1.amazonaws.com:5000/users/signup",
@@ -39,11 +39,14 @@ const SignUpForm = () => {
         }
       );
       let resJson = await res.json();
+      if (resJson.data.accessToken) {
+        localStorage.setItem("user", JSON.stringify(resJson.data))
+      }
       console.log(resJson);
     } catch (err) {
       console.log(err);
     }
-    navigate("/login");
+    navigate("/");
   };
 
   return (
@@ -81,6 +84,7 @@ const SignUpForm = () => {
               </label>
               <input
                 type="text"
+                name="firstname"
                 id="firstname"
                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
                 placeholder="Donald"
@@ -98,6 +102,7 @@ const SignUpForm = () => {
               </label>
               <input
                 type="text"
+                name="lastname"
                 id="lastname"
                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
                 placeholder="Ferguson"

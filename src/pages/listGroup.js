@@ -1,19 +1,23 @@
 import React from "react";
 import { Button } from "devextreme-react";
+import { useNavigate } from "react-router-dom";
 import authHeader from "../utils/authHeader";
 
+
 class ListGroup extends React.Component {
+
+    navigate = useNavigate();
 
     constructor(props) {
         super(props);
       
-        // Initializing the state 
         this.state = { grouplist: []};
       }
     
     async componentDidMount() {
         try {
-            let res = await fetch("http://127.0.0.1:5000/group/list", {
+            let res = await fetch("http://127.0.0.1:5000/group/list",
+            {
                 method: "GET",
                 headers: authHeader()
             });
@@ -26,14 +30,15 @@ class ListGroup extends React.Component {
         }
     }
 
-    handleOnClick = () => {
-
+    handleOnClick = (groupid) => {
+        const path = "/group/"+groupid
+        this.navigate(path)
     }
 
     render() {
         return (
             <div>
-                <List list={this.state.grouplist} onClick={this.handleOnClick} />
+                <List list={this.state.grouplist} onClick={this.handleOnClick()} />
             </div>
         )
     }
@@ -47,8 +52,8 @@ const List = ({ list, onClick }) => (
             <Button 
             component="label"
             color="primary"
-            onClick = {onClick}>
-                {item}
+            onClick = {onClick(item.uuid)}>
+                {item.groupname}
             </Button>
         ))}
     </ul>
