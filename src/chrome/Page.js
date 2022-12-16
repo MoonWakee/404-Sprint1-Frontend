@@ -15,10 +15,14 @@ export const Page = ({
   children,
   ...containerProps
 }) => (
-  <Container maxWidth="sm" {...containerProps} sx={{ gap: 2, ...containerProps.sx }}>
-    <Header title={title} />
-    {children}
-  </Container>
+  // <Container maxWidth="sm" {...containerProps} sx={{ gap: 2, ...containerProps.sx }}>
+  //   <Header title={title} />
+  //   {children}
+  // </Container>
+  <div className="" {...containerProps}>
+      <Header />
+      {children}
+    </div>
 );
 
 const FullscreenContainer = styled(Box)`
@@ -32,8 +36,8 @@ export const FullscreenPage = ({
   title,
   children,
 }) => (
-  <FullscreenContainer>
+  <div className="">
     <Header title={title} />
     {children}
-  </FullscreenContainer>
+  </div>
 );
