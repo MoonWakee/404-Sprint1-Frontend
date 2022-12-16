@@ -22,9 +22,7 @@ const LoginForm = () => {
     event.preventDefault();
     // navigate("/AddSchedulePage", { replace: true });
     try {
-      let res = await fetch(
-        "http://ec2-44-206-245-116.compute-1.amazonaws.com:5000/users/login", 
-        {
+      let res = await fetch("http://127.0.0.1:5000/api/user/login", {
         method: "POST",
         body: JSON.stringify({
           email: values.email,
@@ -33,7 +31,7 @@ const LoginForm = () => {
       });
       let resJson = await res.json();
       if (resJson.data.accessToken) {
-        localStorage.setItem("user", JSON.stringify(resJson.data))
+        localStorage.setItem("user", JSON.stringify(resJson.data));
       }
       console.log(resJson);
     } catch (err) {
@@ -82,7 +80,7 @@ const LoginForm = () => {
             />
           </div>
           <button
-            onSubmit={handleFormSubmit}
+            onClick={handleFormSubmit}
             type="submit"
             class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
           >
