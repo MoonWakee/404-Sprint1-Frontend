@@ -1,5 +1,6 @@
 import React, { useState } from 'react' 
 import 'devextreme/dist/css/dx.light.css';
+import "../index.css";
 import Scheduler, {Resource} from 'devextreme-react/scheduler';
 
 let data = [
