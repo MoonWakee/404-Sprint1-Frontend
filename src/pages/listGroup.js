@@ -1,64 +1,54 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Button } from "devextreme-react";
 import { useNavigate } from "react-router-dom";
 import authHeader from "../utils/authHeader";
 
+const ListGroupPage = () => {
+  const [groupList, setGroupList] = useState([]);
 
-class ListGroup extends React.Component {
-
-    navigate = useNavigate();
-
-    constructor(props) {
-        super(props);
-      
-        this.state = { grouplist: []};
+  useEffect(() => {
+    const fetchGroups = async () => {
+      try {
+        const headers = {
+            ...authHeader(), 
+            Accept: 'application/json',
+        }
+        let res = await fetch("http://127.0.0.1:5000/api/group/list", {
+          method: "GET",
+          headers: headers
+        });
+        let resJson = await res.json();
+        console.log(resJson[0].groups)
+        setGroupList(resJson[0].groups);
+      } catch (err) {
+        console.log(err);
       }
-    
-    async componentDidMount() {
-        try {
-            let res = await fetch("http://127.0.0.1:5000/api/group/list",
-            {
-                method: "GET",
-                headers: authHeader()
-            });
-            let resJson = await res.json();
-            console.log(resJson)
-            this.setState({ grouplist: resJson.grouplist })
-        }
-        catch (err) {
-            console.log(err);
-        }
-    }
+    };
+    fetchGroups();
+  }, []);
 
-    handleOnClick = (groupid) => {
-        const path = "/group/"+groupid
-        this.navigate(path)
-    }
+  const handleClick = () => {
 
-    render() {
-        return (
-            <div>
-                <List list={this.state.grouplist} onClick={this.handleOnClick()} />
-            </div>
-        )
-    }
+  }
 
-
-}
-
-const List = ({ list, onClick }) => (
-    <ul>
-        {list.map((item) => (
-            <Button 
-            component="label"
-            color="primary"
-            onClick = {onClick(item.uuid)}>
-                {item.groupname}
-            </Button>
-        ))}
+  const group_items = groupList.map((group) =>
+    <ul key={group.group_id}>
+        <Button onClick={handleClick}>
+            {group.group_name}
+        </Button>
     </ul>
     );
 
-export const ListGroupPage = () => (
-    < ListGroup />
-);
+  return (
+    <div>
+        <div>
+            My Groups
+        </div>
+        <div>
+            {group_items}
+        </div>
+    </div>
+  );
+};
+
+export default ListGroupPage;
