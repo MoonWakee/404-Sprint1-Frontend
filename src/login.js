@@ -31,8 +31,8 @@ const LoginForm = () => {
         }),
       });
       let resJson = await res.json();
-      if (resJson.data.token) {
-        localStorage.setItem("user", JSON.stringify(resJson.data))
+      if (resJson.token) {
+        localStorage.setItem("user", JSON.stringify(resJson))
       }
       console.log(resJson);
     } catch (err) {
