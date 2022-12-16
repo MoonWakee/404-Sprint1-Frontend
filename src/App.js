@@ -4,10 +4,13 @@ import logo from './logo.svg';
 import './App.css';
 import SignUpForm from './signup';
 import AddSchedulePage from './pages/addSchedulePage';
-import {BrowserRouter as Router, Routes , Route} from 'react-router-dom';
+import { ListGroupPage } from './pages/listGroup';
+import { AddGroupPage } from './addGroup';
+import {BrowserRouter as Router, Routes , Route, useParams} from 'react-router-dom';
 import {LoginPage} from './login';
 import {SignUpPage} from './signup';
 import {CalendarPage} from './Calendar';
+import { EditGroupPage } from './pages/editGroup';
 
 
 function App() {
@@ -16,8 +19,11 @@ function App() {
         <Routes>
           <Route path = "/" element = {<LoginPage/>} />
           <Route path = "/calendar" element = {<CalendarPage/>} />
-          <Route path = "/login" element = {<SignUpPage/>} />
+          <Route path = "/signup" element = {<SignUpPage/>} />
           <Route path="/AddSchedulePage" element = {<AddSchedulePage /> } />
+          <Route path="/AddGroupPage" element = {<AddGroupPage /> } />
+          <Route path="/listGroup" element = {<ListGroupPage /> } />
+          <Route path="/group/:groupid" element = {<EditGroupPage/> } />
         </Routes>
     </Router>
   );
