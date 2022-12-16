@@ -33,6 +33,9 @@ const LoginForm = () => {
                 }),
             });
             let resJson = await res.json();
+            if (resJson.data.accessToken) {
+                localStorage.setItem("user", JSON.stringify(resJson.data));
+            }
             console.log(resJson)
         }
         catch (err) {
