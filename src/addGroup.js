@@ -44,7 +44,7 @@ const AddGroupForm = () => {
                 method: "POST",
                 headers: headers,
                 body: JSON.stringify({
-                    groupname: values.groupname
+                    group_name: values.groupname
                 }),
             });
             let resJson = await res.json();
