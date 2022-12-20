@@ -7,7 +7,6 @@ const ListGroupPage = () => {
   let navigate = useNavigate();
 
   const [groupList, setGroupList] = useState([]);
-  const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
     const fetchGroups = async () => {
