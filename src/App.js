@@ -11,6 +11,7 @@ import {CalendarPage} from './Calendar';
 import { AddGroupPage } from './pages/addGroup';
 import ListGroupPage from './pages/listGroup';
 import GroupPage from './pages/groupPage';
+import UserProfile from './pages/userProfile';
 
 
 function App() {
@@ -20,6 +21,7 @@ function App() {
           <Route path = "/" element = {<LoginPage/>} />
           <Route path = "/calendar" element = {<CalendarPage/>} />
           <Route path = "/signup" element = {<SignUpPage/>} />
+          <Route path="/profile" element = { <UserProfile/> } />
           <Route path="/AddSchedulePage" element = {<AddSchedulePage /> } />
           <Route path="/group/:id" element = {< GroupPage/> } />
           <Route path="/group/addgroup" element = {< AddGroupPage/> } />
