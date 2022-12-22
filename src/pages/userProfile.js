@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import authHeader from "../utils/authHeader";
 
 const UserProfile = () => {
+  let navigate = useNavigate();
   const [profile, setProfile] = useState([]);
 
   useEffect(() => {
@@ -27,15 +28,26 @@ const UserProfile = () => {
     fetchProfile();
   }, []);
 
-
+  const handleDelete = async () => {
+    try {
+      const headers = {
+          ...authHeader(), 
+          Accept: 'application/json',
+      }
+      const url = "http://127.0.0.1:5000/api/user/profile"
+      await fetch(url, {
+        method: "DELETE",
+        headers: headers,
+      });
+      navigate('/signup');
+    } catch (err) {
+      console.log(err);
+    }
+  }
 
   return (
 
     <div>
-        {/* {profile.email}
-        {profile.user_name}
-        {profile.first_name}
-        {profile.last_name} */}
       <div class="max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow-md dark:bg-gray-800 dark:border-gray-700">
         {/* <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">
           UserName: {profile.user_name}
@@ -50,6 +62,11 @@ const UserProfile = () => {
         <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">
           Last Name: {profile.last_name}
         </p>
+      </div>
+      <div>
+        <Button onClick={handleDelete}>
+          Delete Account
+        </Button>
       </div>
     </div>
     
