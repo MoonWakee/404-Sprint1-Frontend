@@ -1,9 +1,14 @@
-import * as React from "react";
+import React, { useState } from "react";
+// import React, { useState } from 'react';
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
+import Dialog from '@mui/material/Dialog';
+import DialogTitle from '@mui/material/DialogTitle';
+import DialogContent from '@mui/material/DialogContent';
+import DialogActions from '@mui/material/DialogActions';
 
 import { useNavigate, Link as RouterLink } from "react-router-dom";
 
@@ -14,7 +19,15 @@ class HeaderProps {
 export const Header = ({ title }) => {
   var user = localStorage.getItem('user');
   const navigate = useNavigate();
+  // var openDialog = false;
+  const [openDialog, setOpen] = useState(false);
   var cur = false;
+
+  const handleCloseDialog = () => {
+    setOpen(false);
+  };
+
+
   if (window.location.href === "http://localhost:3000/") cur = true;
   return (
     <nav className="bg-white border-gray-200 px-2 md:px-4 py-2.5 dark:bg-gray-900">
@@ -29,6 +42,31 @@ export const Header = ({ title }) => {
             WeMeet
           </span>
         </a>
+        <Dialog
+          fullWidth={true}
+          open={openDialog}
+          onClose={handleCloseDialog}
+          style={{ backgroundColor: 'transparent' }}
+        >
+          <DialogTitle>Group Info</DialogTitle>
+          <DialogContent>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleCloseDialog}>Cancel</Button>
+          </DialogActions>
+        </Dialog>
+        <div className="flex items-center md:order-2">
+          <a
+            style={{ cursor: "pointer" }}
+            className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 md:px-5 md:py-2.5 mr-1 md:mr-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
+            onClick={() => {
+              setOpen(true);
+              console.log(openDialog);
+            }}
+          >
+            {cur ? "Sign Up" : "Log In"}
+          </a>
+        </div>
         <div className="flex items-center md:order-2">
           <a
             style={{ cursor: "pointer" }}
