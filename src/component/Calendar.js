@@ -70,7 +70,7 @@ const getData = () => {
         endDate: endTime,
         rRule: recurrenceRule,
         allDay: el.all_day,
-        id: index,
+        id: el.uuid,
         color: 'red[500]'
       })
     });
@@ -128,6 +128,29 @@ const onAppointmentUpdating = (e) => {
   //addSchedule(schedule_name, start_time, end_time, description)
 };
 
+const deleteSchedule = async(id) => {
+  console.log(id)
+  try {
+    let res = await fetch("http://127.0.0.1:5000/api/schedule/" + String(id), {
+      method: "DELETE",
+      headers: {
+        ...authHeader(),
+        Accept: "application/json",
+      },
+    });
+    let data = await res.json();
+    //console.log(data);
+    return data;
+  } catch (err) {
+    console.error(err);
+  }
+}
+
+const onAppointmentDeleted = (e) => {
+  var id = e.appointmentData.id
+  deleteSchedule(id)
+}
+
 class Calendar extends React.Component {
 
   constructor() {
@@ -158,6 +181,7 @@ class Calendar extends React.Component {
           dataSource={schedules}
           onAppointmentAdding={onAppointmentAdding}
           onAppointmentUpdating={onAppointmentUpdating}
+          onAppointmentDeleted={onAppointmentDeleted}
         ></Scheduler>
       </div>
     );
