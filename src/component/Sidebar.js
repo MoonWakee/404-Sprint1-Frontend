@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "../App.css";
 import { SidebarData } from "./SidebarData";
-import { useNavigate } from "react-router-dom";
+import authHeader from "../utils/authHeader";
 
 function Sidebar() {
   const routeChange = (p) => {
@@ -13,10 +13,29 @@ function Sidebar() {
     }
     window.location.pathname = isCur;
   };
-  let navigate = useNavigate();
-  const onClick = () => {
-    navigate('/group/addgroup')
-  }
+
+  const [groupList, setGroupList] = useState([]);
+
+  useEffect(() => {
+    const fetchGroups = async () => {
+      try {
+        const headers = {
+            ...authHeader(), 
+            Accept: 'application/json',
+        }
+        let res = await fetch("http://127.0.0.1:5000/api/group/list", {
+          method: "GET",
+          headers: headers
+        });
+        let resJson = await res.json();
+        console.log(resJson)
+        setGroupList(resJson[0].groups);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    fetchGroups();
+  }, []);
 
   return (
     <aside class="w-64" aria-label="Sidebar">
@@ -41,7 +60,7 @@ function Sidebar() {
                 />
               </svg>
 
-              <span class="ml-3" onClick={onClick}>Create group</span>
+              <span class="ml-3">Create group</span>
             </a>
           </li>
           <li className="invisible">
@@ -64,8 +83,8 @@ function Sidebar() {
               </span>
             </a>
           </li>
-          {/* ◊ */}
-          <li>
+          {groupList.map((group) => (
+            <li>
             <a
               href="#"
               class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700"
@@ -83,33 +102,11 @@ function Sidebar() {
                   clip-rule="evenodd"
                 ></path>
               </svg>
-              <span class="flex-1 ml-3 whitespace-nowrap">Group 1</span>
+              <span class="flex-1 ml-3 whitespace-nowrap">{group.group_name}</span>
               <svg aria-hidden="true" class="flex-shrink-0 inline w-5 h-5 mr-3" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"></path></svg>
             </a>
-          </li>
-          {/* group 2  */}
-          <li>
-            <a
-              href="#"
-              class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700"
-            >
-              <svg
-                aria-hidden="true"
-                class="flex-shrink-0 w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
-                fill="currentColor"
-                viewBox="0 0 20 20"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  fill-rule="evenodd"
-                  d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"
-                  clip-rule="evenodd"
-                ></path>
-              </svg>
-              <span class="flex-1 ml-3 whitespace-nowrap">Group 2</span>
-              <svg aria-hidden="true" class="flex-shrink-0 inline w-5 h-5 mr-3" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"></path></svg>
-            </a>
-          </li>
+            </li>
+          ))}
         </ul>
       </div>
     </aside>
