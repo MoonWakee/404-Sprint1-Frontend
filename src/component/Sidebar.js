@@ -39,7 +39,7 @@ function Sidebar() {
               <span class="ml-3">Create group</span>
             </a>
           </li>
-          <li className='invisible'>
+          <li className="invisible">
             <a
               href="#"
               class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700"
@@ -79,6 +79,7 @@ function Sidebar() {
                 ></path>
               </svg>
               <span class="flex-1 ml-3 whitespace-nowrap">Group 1</span>
+              <svg aria-hidden="true" class="flex-shrink-0 inline w-5 h-5 mr-3" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"></path></svg>
             </a>
           </li>
           {/* group 2  */}
@@ -101,6 +102,7 @@ function Sidebar() {
                 ></path>
               </svg>
               <span class="flex-1 ml-3 whitespace-nowrap">Group 2</span>
+              <svg aria-hidden="true" class="flex-shrink-0 inline w-5 h-5 mr-3" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"></path></svg>
             </a>
           </li>
         </ul>
