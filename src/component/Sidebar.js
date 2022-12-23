@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import "../App.css";
 import { SidebarData } from "./SidebarData";
+import { useNavigate } from "react-router-dom";
 
 function Sidebar() {
   const routeChange = (p) => {
@@ -12,6 +13,10 @@ function Sidebar() {
     }
     window.location.pathname = isCur;
   };
+  let navigate = useNavigate();
+  const onClick = () => {
+    navigate('/group/addgroup')
+  }
 
   return (
     <aside class="w-64" aria-label="Sidebar">
@@ -36,7 +41,7 @@ function Sidebar() {
                 />
               </svg>
 
-              <span class="ml-3">Create group</span>
+              <span class="ml-3" onClick={onClick}>Create group</span>
             </a>
           </li>
           <li className="invisible">
