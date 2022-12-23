@@ -7,6 +7,8 @@ import DialogTitle from '@mui/material/DialogTitle';
 import DialogContent from '@mui/material/DialogContent';
 import DialogActions from '@mui/material/DialogActions';
 import Button from '@mui/material/Button';
+import IconButton from '@mui/material/Button';
+import SearchIcon from '@mui/material/Button';
 import { TextField, InputLabel } from '@mui/material';
 import authHeader from "../utils/authHeader";
 
@@ -21,29 +23,35 @@ function Sidebar() {
     window.location.pathname = isCur;
   };
 
-  useEffect(() => {
-    const fetchGroups = async () => {
-      try {
-        const headers = {
-            ...authHeader(), 
-            Accept: 'application/json',
-        }
-        let res = await fetch("http://127.0.0.1:5000/api/group/list", {
-          method: "GET",
-          headers: headers
-        });
-        let resJson = await res.json();
-        console.log(resJson)
-        setGroupList(resJson[0].groups);
-      } catch (err) {
-        console.log(err);
+  const fetchGroups = async () => {
+    try {
+      const headers = {
+        ...authHeader(),
+        Accept: 'application/json',
       }
-    };
+      let res = await fetch("http://127.0.0.1:5000/api/group/list", {
+        method: "GET",
+        headers: headers
+      });
+      let resJson = await res.json();
+      console.log(resJson)
+      setGroupList(resJson[0].groups);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  useEffect(() => {
     fetchGroups();
   }, []);
-  
+
   const [groupList, setGroupList] = useState([]);
   const [openDialog, setOpen] = useState(false);
+  const [openGroupDialog, setOpenGroup] = useState(false);
+  const [groupMemberList, setGroupMemberList] = useState([]);
+  const [groupName, setGroupName] = useState("");
+  const [groupId, setGroupId] = useState("");
+  const [members, setMembers] = useState([])
   const [values, setValues] = useState({
     groupname: "",
   });
@@ -54,6 +62,22 @@ function Sidebar() {
 
   const handleOpenDialog = () => {
     setOpen(true);
+  };
+
+  const handleCloseGroupDialog = () => {
+    setOpenGroup(false);
+    setGroupId("")
+    setGroupName("");
+  };
+
+  const handleOpenGroupDialog = (name, id) => {
+    // console.log(name)
+    setGroupId(id);
+    console.log(id);
+    setOpenGroup(true);
+    setGroupName(name);
+    fetchGroupData(id);
+    fetchAllUsers();
   };
 
   const handleChange = (event) => {
@@ -78,13 +102,96 @@ function Sidebar() {
         }),
       });
       let resJson = await res.json();
-      console.log(resJson)
+      console.log(resJson);
+      fetchGroups();
+      setOpen(false)
     }
     catch (err) {
       console.log(err);
     }
     // navigate('/listGroup');
   }
+
+  const fetchAllUsers = async () => {
+    try {
+      const headers = {
+        ...authHeader(),
+        Accept: 'application/json',
+      }
+      let res = await fetch("http://127.0.0.1:5000/api/user/list", {
+        method: "GET",
+        headers: headers
+      });
+      let resJson = await res.json();
+      console.log(resJson)
+      setMembers(resJson)
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const fetchGroupData = async (group_id) => {
+    try {
+      const headers = {
+        ...authHeader(),
+        Accept: 'application/json',
+      }
+      console.log(group_id)
+      const url = "http://127.0.0.1:5000/api/group/" + group_id
+      console.log(url)
+      let res = await fetch(url, {
+        method: "GET",
+        headers: headers
+      });
+      let resJson = await res.json();
+      console.log(resJson);
+      setGroupMemberList(resJson.users);
+      // setGroupName(resJson.group_name);
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
+  const handleDelete = async (group_id) => {
+    console.log("delete")
+    try {
+      const headers = {
+        ...authHeader(),
+        Accept: 'application/json',
+      }
+      const url = "http://127.0.0.1:5000/api/group/" + group_id
+      await fetch(url, {
+        method: "DELETE",
+        headers: headers,
+      });
+      fetchGroups();
+      setOpenGroup(false)
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
+  const handleAddMember = async (user) => {
+    console.log(user);
+    try {
+      const headers = {
+          ...authHeader(), 
+      }
+      const url = "http://127.0.0.1:5000/api/group/" + groupId
+      await fetch(url, {
+        method: "POST",
+        headers: headers,
+        body: JSON.stringify({
+          userId: user.userId
+        }),
+      });
+      setGroupMemberList([...groupMemberList, user])
+      console.log(groupMemberList)
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
 
   return (
     <aside class="w-64" aria-label="Sidebar">
@@ -156,28 +263,88 @@ function Sidebar() {
               </span>
             </a>
           </li>
+          <Dialog
+            fullWidth={true}
+            open={openGroupDialog}
+            onClose={handleCloseGroupDialog}
+            style={{ backgroundColor: 'transparent' }}
+          >
+            <DialogTitle>Group: {groupName}</DialogTitle>
+            <DialogContent>
+              <div>
+                <h2>Members</h2>
+                {groupMemberList.map((member) =>
+                  <ul key={member.userId} style={{ display: 'inline-flex', flexWrap: 'nowrap' }} >
+                    <div>
+                      <div class="overflow-hidden relative w-10 h-10 bg-gray-100 rounded-full dark:bg-gray-600">
+                        <svg class="absolute -left-1 w-12 h-12 text-gray-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"></path></svg>
+                      </div>
+                      {member.first_name == "" ? "N/A" : member.first_name}
+                    </div>
+                  </ul>
+                )}
+                {"\n"}
+                <h2>Add New Members</h2>
+                {members.filter((member) => {
+                  let groupMembers = groupMemberList.map((member) => member.email)
+                  return !groupMembers.includes(member.email)
+                }).map((member) =>
+                  <ul class="py-3 sm:py-4" key={member.userId}>
+                    <div class="flex items-center space-x-4">
+                      <div class="min-w-0">
+                        <p class="text-sm font-medium text-gray-900 truncate dark:text-white">
+                          {member.first_name}
+                        </p>
+                        <p class="text-sm text-gray-500 truncate dark:text-gray-400">
+                          {member.email}
+                        </p>
+                      </div>
+                      <div class="items-center text-base font-semibold text-gray-900 dark:text-white">
+                        <Button onClick={() => handleAddMember(member)}>
+                          add
+                        </Button>
+                      </div>
+                    </div>
+                  </ul>
+                )}
+              </div>
+              <div>
+                <Button onClick={() => handleDelete(groupId)} color="error">
+                  Delete Group
+                </Button>
+              </div>
+            </DialogContent>
+            <DialogActions>
+              <Button onClick={handleCloseGroupDialog}>Cancel</Button>
+            </DialogActions>
+          </Dialog>
           {groupList.map((group) => (
-            <li>
-            <a
-              href="#"
-              class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700"
-            >
-              <svg
-                aria-hidden="true"
-                class="flex-shrink-0 w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
-                fill="currentColor"
-                viewBox="0 0 20 20"
-                xmlns="http://www.w3.org/2000/svg"
+            <li key={group.id}>
+              <a
+                class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700"
               >
-                <path
-                  fill-rule="evenodd"
-                  d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"
-                  clip-rule="evenodd"
-                ></path>
-              </svg>
-              <span class="flex-1 ml-3 whitespace-nowrap">{group.group_name}</span>
-              <svg aria-hidden="true" class="flex-shrink-0 inline w-5 h-5 mr-3" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"></path></svg>
-            </a>
+                <svg
+                  aria-hidden="true"
+                  class="flex-shrink-0 w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    fill-rule="evenodd"
+                    d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"
+                    clip-rule="evenodd"
+                  ></path>
+                </svg>
+                <span class="flex-1 ml-3 whitespace-nowrap">{group.group_name}</span>
+                <button
+                  onClick={() => handleOpenGroupDialog(group.group_name, group.group_id)}
+                  class="mb-2 flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700"
+                >
+                  <svg aria-hidden="true" class="flex-shrink-0 inline w-5 h-5 mr-3" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"></path></svg>
+                </button>
+                {/* <svg aria-hidden="true" class="flex-shrink-0 inline w-5 h-5 mr-3" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"></path></svg> */}
+              </a>
             </li>
           ))}
         </ul>
