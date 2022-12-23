@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import "devextreme/dist/css/dx.light.css";
 import Scheduler, { Resource } from "devextreme-react/scheduler";
 import authHeader from "../utils/authHeader";
+import { purple, red } from '@mui/material/colors';
+
 
 const addSchedule = async (
   schedule_name,
@@ -54,18 +56,22 @@ const getData = () => {
   var promise = fetchSchedule().then(function(res) {
     console.log(res)
     var schedules = []
-    res.forEach(el => {
-      var times = el.meta_data.split(';')
-      var startTime = times[0]
-      var endTime = times[1]
-      
+    res.forEach((el, index) => {
+      console.log(el.start_time)
+      var startTime = new Date(el.start_time)
+      var endTime = new Date(el.end_time)
+      if (el.description === null) var description = undefined
+      if (el.recurrence_rule === 0) var recurrenceRule = undefined      
+
       schedules.push({
         text: el.schedule_name,
-        description: el.description,
-        startTime: startTime,
-        endTime: endTime,
-        recurrenceRule: el.recurrence_rule,
-        allDay: el.all_day
+        description: description,
+        startDate: startTime,
+        endDate: endTime,
+        rRule: recurrenceRule,
+        allDay: el.all_day,
+        id: index,
+        color: 'red[500]'
       })
     });
     console.log(schedules)
@@ -90,14 +96,14 @@ const onAppointmentAdding = (e) => {
   const end_time = date + " " + time;
 
   var description = JSON.stringify(e.appointmentData.description);
-  if (description == undefined) description = null;
+  if (description === undefined) description = null;
   else description = description.substring(1, description.length - 1);
   var schedule_name = JSON.stringify(e.appointmentData.text);
-  if (schedule_name == undefined) return 
+  if (schedule_name === undefined) return 
   else schedule_name = schedule_name.substring(1, schedule_name.length - 1);
   var all_day = e.appointmentData.allDay
   var recurrence_rule = JSON.stringify(e.appointmentData.recurrenceRule)
-  if (recurrence_rule == undefined) recurrence_rule = null;
+  if (recurrence_rule === undefined) recurrence_rule = null;
   else recurrence_rule = recurrence_rule.substring(1, recurrence_rule.length -1)
   //console.log(schedule_name, start_time, end_time, description, all_day, recurrence_rule, meta_data)
   addSchedule(schedule_name, start_time, end_time, description, all_day, recurrence_rule, meta_data)
@@ -138,7 +144,7 @@ class Calendar extends React.Component {
   
   render() {
     const { isLoading, schedules } = this.state;
-    console.log(schedules)
+    console.log('here is' + schedules)
     if (isLoading) {
       return <div className="App">Loading...</div>;
     }
