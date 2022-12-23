@@ -70,19 +70,18 @@ const getData = () => {
         endDate: endTime,
         rRule: recurrenceRule,
         allDay: el.all_day,
-        id: index,
-        color: 'red[500]'
+        id: 1,
+        appointmentColor: 'red'
       })
     });
-    console.log(schedules)
-    return schedules
+    //console.log(schedules)
+    return schedules;  // return the schedules array here
   })
   return promise
 }
 
-
 const onAppointmentAdding = (e) => {
-  //console.log(e)
+  console.log(e)
   var words = JSON.stringify(e.appointmentData.startDate);
   var meta_data = words + ';'
   var date = words.substring(1, 11);
@@ -128,11 +127,19 @@ const onAppointmentUpdating = (e) => {
   //addSchedule(schedule_name, start_time, end_time, description)
 };
 
+// ---- Appointment color ---- ///
+// const appointmentTemplate = ({ appointmentData }) => (
+//   <div style={{ backgroundColor: appointmentData.appointmentColor }}>
+//     {appointmentData.text}
+//   </div>
+// );
+
+
 class Calendar extends React.Component {
 
   constructor() {
     super();
-    this.state = { isLoading: true, schedules: false };
+    this.state = { isLoading: true, schedules: false};
   }
 
   componentDidMount() {
@@ -144,7 +151,7 @@ class Calendar extends React.Component {
   
   render() {
     const { isLoading, schedules } = this.state;
-    console.log('here is' + schedules)
+    //console.log('here is' + JSON.stringify(schedules))
     if (isLoading) {
       return <div className="App">Loading...</div>;
     }
@@ -156,6 +163,7 @@ class Calendar extends React.Component {
           height={870}
           startDayHour={9}
           dataSource={schedules}
+          //appointmentTemplate={appointmentTemplate}
           onAppointmentAdding={onAppointmentAdding}
           onAppointmentUpdating={onAppointmentUpdating}
         ></Scheduler>
