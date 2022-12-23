@@ -212,6 +212,7 @@ function Sidebar({ selectGroup }) {
                 onChange={handleChange}
               />
               <Button
+                class='max-w-max'
                 component="label"
                 color="primary"
                 onClick={handleFormSubmit}
@@ -268,17 +269,16 @@ function Sidebar({ selectGroup }) {
             onClose={handleCloseGroupDialog}
             style={{ backgroundColor: "transparent" }}
           >
-            <DialogTitle>Group: {groupName}</DialogTitle>
+            <DialogTitle class="text-xl pt-2 pl-2 pb-3 flex-1 ml-3 whitespace-nowrap">
+              Group: {groupName}
+            </DialogTitle>
             <DialogContent>
               <div>
-                <h2>Members</h2>
+                <h2 class="mb-4 text-lg">Members</h2>
                 {groupMemberList.map((member) => (
-                  <ul
-                    key={member.userId}
-                    style={{ display: "inline-flex", flexWrap: "nowrap" }}
-                  >
-                    <div>
-                      <div class="overflow-hidden relative w-10 h-10 bg-gray-100 rounded-full dark:bg-gray-600">
+                  <ul key={member.userId} style={{ display: "inline-flex" }}>
+                    <div class="p-2 text-center">
+                      <div class="justify-center align-center overflow-hidden relative w-10 h-10 bg-gray-100 rounded-full dark:bg-gray-600">
                         <svg
                           class="absolute -left-1 w-12 h-12 text-gray-400"
                           fill="currentColor"
@@ -297,7 +297,7 @@ function Sidebar({ selectGroup }) {
                   </ul>
                 ))}
                 {"\n"}
-                <h2>Add New Members</h2>
+                <h2 class="mt-4 text-lg">Add New Members</h2>
                 {members
                   .filter((member) => {
                     let groupMembers = groupMemberList.map(
@@ -309,7 +309,7 @@ function Sidebar({ selectGroup }) {
                     <ul class="py-3 sm:py-4" key={member.userId}>
                       <div class="flex items-center space-x-4">
                         <div class="min-w-0">
-                          <p class="text-sm font-medium text-gray-900 truncate dark:text-white">
+                          <p class="text-l font-medium text-gray-900 truncate dark:text-black">
                             {member.first_name}
                           </p>
                           <p class="text-sm text-gray-500 truncate dark:text-gray-400">
@@ -317,26 +317,39 @@ function Sidebar({ selectGroup }) {
                           </p>
                         </div>
                         <div class="items-center text-base font-semibold text-gray-900 dark:text-white">
-                          <Button onClick={() => handleAddMember(member)}>
+                          <button
+                            type="button"
+                            class="text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700"
+                            onClick={() => handleAddMember(member)}
+                          >
                             add
-                          </Button>
+                          </button>
                         </div>
                       </div>
                     </ul>
                   ))}
               </div>
-              <div>
-                <Button onClick={() => handleDelete(groupId)} color="error">
-                  Delete Group
-                </Button>
-              </div>
             </DialogContent>
             <DialogActions>
-              <Button onClick={handleCloseGroupDialog}>Cancel</Button>
+              <button
+                type="button"
+                class="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900"
+                onClick={() => handleDelete(groupId)}
+                color="error"
+              >
+                Delete Group
+              </button>
+              <button
+                type="button"
+                class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
+                onClick={handleCloseGroupDialog}
+              >
+                Done
+              </button>
             </DialogActions>
           </Dialog>
           {groupList.map((group) => (
-            <li key={group.id}>
+            <li style={{ cursor: "pointer" }} key={group.id}>
               <a class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
                 <svg
                   aria-hidden="true"
@@ -360,6 +373,7 @@ function Sidebar({ selectGroup }) {
                   {group.group_name}
                 </span>
                 <button
+                  style={{ cursor: "pointer" }}
                   onClick={() =>
                     handleOpenGroupDialog(group.group_name, group.group_id)
                   }
