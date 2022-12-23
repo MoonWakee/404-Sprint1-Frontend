@@ -46,9 +46,7 @@ const addSchedule = async (
     console.log(err);
   }
 };
-
 const fetchSchedule = async () => {
-  // navigate("/AddSchedulePage", { replace: true });
   try {
     let res = await fetch("http://127.0.0.1:5000/api/schedule/", {
       method: "GET",
@@ -66,6 +64,9 @@ const fetchSchedule = async () => {
 };
 
 const getData = () => {
+  fetchSchedule().then(function(res) {
+    console.log(res)
+  })
 }
 
 const onAppointmentAdding = (e) => {
@@ -123,7 +124,7 @@ class Calendar extends React.Component {
           defaultCurrentView="week"
           height={870}
           startDayHour={9}
-          dataSource={getData}
+          dataSource={getData()}
           onAppointmentAdding={onAppointmentAdding}
           onAppointmentUpdating={onAppointmentUpdating}
         ></Scheduler>

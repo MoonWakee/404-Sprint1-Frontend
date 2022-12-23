@@ -29,19 +29,17 @@ const getUserData = async () => {
 };
 
 export const Header = ({ title }) => {
+  const navigate = useNavigate();
+
   var user = localStorage.getItem("user");
   const [userName, setUserName] = useState(false);
 
-  console.log(user);
   if (user) {
     getUserData().then(function (res) {
-      console.log(res);
       var user_name = res["user_name"];
-      console.log(user_name);
       setUserName(user_name)
     });
   }
-  const navigate = useNavigate();
   var cur = false;
   const [dropdownOpen, setDropdownOpen] = useState(false);
   useEffect(() => {

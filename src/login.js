@@ -33,12 +33,12 @@ const LoginForm = () => {
       let resJson = await res.json();
       if (resJson.token) {
         localStorage.setItem("user", JSON.stringify(resJson))
+        navigate("/calendar");
       }
       console.log(resJson);
     } catch (err) {
       console.log(err);
     }
-    navigate("/calendar");
   };
 
   return (
