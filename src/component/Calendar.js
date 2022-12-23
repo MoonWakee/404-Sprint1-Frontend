@@ -3,19 +3,6 @@ import "devextreme/dist/css/dx.light.css";
 import Scheduler, { Resource } from "devextreme-react/scheduler";
 import authHeader from "../utils/authHeader";
 
-let schedules = [
-  // {
-  //   text: 'Website Re-Design Plan',
-  //   startDate: new Date('2022-11-13T16:30:00.000Z'),
-  //   endDate: new Date('2022-11-13T18:30:00.000Z'),
-  // }, {
-  //   text: 'Book Flights to San Fran for Sales Trip',
-  //   startDate: new Date('2022-11-15T19:00:00.000Z'),
-  //   endDate: new Date('2022-11-15T20:00:00.000Z'),
-  //   allDay: true,
-  // }
-];
-
 const addSchedule = async (
   schedule_name,
   start_time,
@@ -43,7 +30,7 @@ const addSchedule = async (
       }),
     });
   } catch (err) {
-    console.log(err);
+    //console.log(err);
   }
 };
 const fetchSchedule = async () => {
@@ -56,7 +43,7 @@ const fetchSchedule = async () => {
       },
     });
     let data = await res.json();
-    console.log(data);
+    //console.log(data);
     return data;
   } catch (err) {
     console.error(err);
@@ -64,13 +51,32 @@ const fetchSchedule = async () => {
 };
 
 const getData = () => {
-  fetchSchedule().then(function(res) {
+  var promise = fetchSchedule().then(function(res) {
     console.log(res)
+    var schedules = []
+    res.forEach(el => {
+      var times = el.meta_data.split(';')
+      var startTime = times[0]
+      var endTime = times[1]
+      
+      schedules.push({
+        text: el.schedule_name,
+        description: el.description,
+        startTime: startTime,
+        endTime: endTime,
+        recurrenceRule: el.recurrence_rule,
+        allDay: el.all_day
+      })
+    });
+    console.log(schedules)
+    return schedules
   })
+  return promise
 }
 
+
 const onAppointmentAdding = (e) => {
-  console.log(e)
+  //console.log(e)
   var words = JSON.stringify(e.appointmentData.startDate);
   var meta_data = words + ';'
   var date = words.substring(1, 11);
@@ -93,7 +99,7 @@ const onAppointmentAdding = (e) => {
   var recurrence_rule = JSON.stringify(e.appointmentData.recurrenceRule)
   if (recurrence_rule == undefined) recurrence_rule = null;
   else recurrence_rule = recurrence_rule.substring(1, recurrence_rule.length -1)
-  console.log(schedule_name, start_time, end_time, description, all_day, recurrence_rule, meta_data)
+  //console.log(schedule_name, start_time, end_time, description, all_day, recurrence_rule, meta_data)
   addSchedule(schedule_name, start_time, end_time, description, all_day, recurrence_rule, meta_data)
 };
 
@@ -117,14 +123,33 @@ const onAppointmentUpdating = (e) => {
 };
 
 class Calendar extends React.Component {
+
+  constructor() {
+    super();
+    this.state = { isLoading: true, schedules: false };
+  }
+
+  componentDidMount() {
+    getData().then(response => {
+      this.setState({schedules: response})
+      this.setState({ isLoading: false });
+    });
+  }
+  
   render() {
+    const { isLoading, schedules } = this.state;
+    console.log(schedules)
+    if (isLoading) {
+      return <div className="App">Loading...</div>;
+    }
+
     return (
       <div className="Calendar">
         <Scheduler
           defaultCurrentView="week"
           height={870}
           startDayHour={9}
-          dataSource={getData()}
+          dataSource={schedules}
           onAppointmentAdding={onAppointmentAdding}
           onAppointmentUpdating={onAppointmentUpdating}
         ></Scheduler>
