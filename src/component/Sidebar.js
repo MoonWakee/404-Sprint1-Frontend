@@ -22,11 +22,6 @@ function Sidebar() {
     window.location.pathname = isCur;
   };
 
-  useEffect(() => {
-    fetchGroups();
-  }, []);
-
-  const [groupList, setGroupList] = useState([]);
   const [openDialog, setOpen] = useState(false);
   const [values, setValues] = useState({
     groupname: "",
@@ -69,24 +64,6 @@ function Sidebar() {
     }
     // navigate('/listGroup');
   }
-
-  const fetchGroups = async () => {
-    try {
-      const headers = {
-        ...authHeader(),
-        Accept: 'application/json',
-      }
-      let res = await fetch("http://127.0.0.1:5000/api/group/list", {
-        method: "GET",
-        headers: headers
-      });
-      let resJson = await res.json();
-      console.log(resJson)
-      setGroupList(resJson[0].groups);
-    } catch (err) {
-      console.log(err);
-    }
-  };
 
   return (
     <aside class="w-64" aria-label="Sidebar">
