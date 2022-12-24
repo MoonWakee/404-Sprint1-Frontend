@@ -195,6 +195,7 @@ function Sidebar({ selectGroup }) {
     <aside class="w-64" aria-label="Sidebar">
       <div class="min-h-screen py-4 px-3 bg-gray-50 dark:bg-gray-800">
         <ul class="space-y-2">
+        <li class='pr-4'>
           <Dialog
             fullWidth={true}
             open={openDialog}
@@ -211,19 +212,21 @@ function Sidebar({ selectGroup }) {
                 value={values.groupname}
                 onChange={handleChange}
               />
-              <Button
-                class='max-w-max'
+               <button
+                type="button"
+                class="ml-4 mt-1 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
                 component="label"
                 color="primary"
                 onClick={handleFormSubmit}
               >
                 Create Group
-              </Button>
+              </button>
             </DialogContent>
             <DialogActions>
               <Button onClick={handleCloseDialog}>Cancel</Button>
             </DialogActions>
           </Dialog>
+          </li>
           <button
             onClick={handleOpenDialog}
             class="mb-2 flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700"
