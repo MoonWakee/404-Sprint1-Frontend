@@ -5,6 +5,7 @@ import { TextField, InputLabel, Button } from "@mui/material";
 
 const LoginForm = () => {
   let navigate = useNavigate();
+  localStorage.removeItem('user');
 
   const [values, setValues] = useState({
     email: "",
@@ -19,7 +20,6 @@ const LoginForm = () => {
   };
 
   const handleFormSubmit = async (event) => {
-    onsubmit={}
     event.preventDefault();
     // navigate("/AddSchedulePage", { replace: true });
     try {
@@ -33,12 +33,12 @@ const LoginForm = () => {
       let resJson = await res.json();
       if (resJson.token) {
         localStorage.setItem("user", JSON.stringify(resJson))
+        navigate("/calendar");
       }
       console.log(resJson)
     } catch (err) {
       console.log(err);
     }
-    navigate("/calendar");
   };
 
   return (
@@ -60,7 +60,7 @@ const LoginForm = () => {
               name="email"
               id="email"
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
-              placeholder="name@company.com"
+              placeholder="uni@columbia.edu"
               onChange={handleChange}
               required
             />
@@ -79,6 +79,7 @@ const LoginForm = () => {
               placeholder="••••••••"
               onChange={handleChange}
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
+              onChange={handleChange}
               required
             />
           </div>
@@ -146,7 +147,7 @@ const LoginForm = () => {
 // export default LoginForm;
 
 export const LoginPage = () => (
-  <Page title="Login" maxWidth="lg">
+  <Page title="Login">
     <LoginForm />
   </Page>
 );
