@@ -53,7 +53,7 @@ class EditGroup extends React.Component {
     handleDeleteGroup = async () => {
         try {
             let res = await fetch(
-                "http://127.0.0.1:5000/group/:groupid", 
+                "https://8getlh855i.execute-api.us-west-2.amazonaws.com/group/:groupid", 
                 {
                 method: "DELETE",
                 headers: authHeader()
@@ -69,7 +69,7 @@ class EditGroup extends React.Component {
 
     handleUpdateGroup = async() => {
         try {
-            let res = await fetch("http://127.0.0.1:5000/group/:groupid", 
+            let res = await fetch("https://8getlh855i.execute-api.us-west-2.amazonaws.com/group/:groupid", 
             {
                 method: "PUT",
                 headers: authHeader(),

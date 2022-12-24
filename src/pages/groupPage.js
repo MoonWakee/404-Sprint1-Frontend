@@ -20,7 +20,7 @@ const GroupPage = () => {
                 ...authHeader(), 
                 Accept: 'application/json',
             }
-            let res = await fetch("http://127.0.0.1:5000/api/user/list", {
+            let res = await fetch("https://8getlh855i.execute-api.us-west-2.amazonaws.com/api/user/list", {
               method: "GET",
               headers: headers
             });
@@ -38,7 +38,7 @@ const GroupPage = () => {
                     ...authHeader(), 
                     Accept: 'application/json',
                 }
-                const url = "http://127.0.0.1:5000/api/group/" + id
+                const url = "https://8getlh855i.execute-api.us-west-2.amazonaws.com/api/group/" + id
                 let res = await fetch(url, {
                   method: "GET",
                   headers: headers
@@ -61,7 +61,7 @@ const GroupPage = () => {
           const headers = {
               ...authHeader(), 
           }
-          const url = "http://127.0.0.1:5000/api/group/" + id
+          const url = "https://8getlh855i.execute-api.us-west-2.amazonaws.com/api/group/" + id
           await fetch(url, {
             method: "POST",
             headers: headers,
@@ -83,7 +83,7 @@ const GroupPage = () => {
               ...authHeader(), 
               Accept: 'application/json',
           }
-          const url = "http://127.0.0.1:5000/api/group/" + id
+          const url = "https://8getlh855i.execute-api.us-west-2.amazonaws.com/api/group/" + id
           await fetch(url, {
             method: "DELETE",
             headers: headers,

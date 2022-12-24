@@ -14,7 +14,7 @@ const addSchedule = async (
   meta_data
 ) => {
   try {
-    let res = await fetch("http://127.0.0.1:5000/api/schedule/", {
+    let res = await fetch("https://8getlh855i.execute-api.us-west-2.amazonaws.com/api/schedule/", {
       method: "POST",
       headers: {
         ...authHeader(),
@@ -36,7 +36,7 @@ const addSchedule = async (
 };
 const fetchSchedule = async () => {
   try {
-    let res = await fetch("http://127.0.0.1:5000/api/schedule/", {
+    let res = await fetch("https://8getlh855i.execute-api.us-west-2.amazonaws.com/api/schedule/", {
       method: "GET",
       headers: {
         ...authHeader(),
@@ -136,7 +136,7 @@ const onAppointmentUpdating = (e) => {
 const deleteSchedule = async (id) => {
   console.log(id);
   try {
-    let res = await fetch("http://127.0.0.1:5000/api/schedule/" + String(id), {
+    let res = await fetch("https://8getlh855i.execute-api.us-west-2.amazonaws.com/api/schedule/" + String(id), {
       method: "DELETE",
       headers: {
         ...authHeader(),

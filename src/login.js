@@ -23,7 +23,7 @@ const LoginForm = () => {
     event.preventDefault();
     // navigate("/AddSchedulePage", { replace: true });
     try {
-      let res = await fetch("http://127.0.0.1:5000/api/user/login", {
+      let res = await fetch("https://8getlh855i.execute-api.us-west-2.amazonaws.com/api/user/login", {
         method: "POST",
         body: JSON.stringify({
           email: values.email,

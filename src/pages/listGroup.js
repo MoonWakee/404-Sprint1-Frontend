@@ -15,7 +15,7 @@ const ListGroupPage = () => {
             ...authHeader(), 
             Accept: 'application/json',
         }
-        let res = await fetch("http://127.0.0.1:5000/api/group/list", {
+        let res = await fetch("https://8getlh855i.execute-api.us-west-2.amazonaws.com/api/group/list", {
           method: "GET",
           headers: headers
         });

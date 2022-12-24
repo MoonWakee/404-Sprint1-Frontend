@@ -13,7 +13,7 @@ const UserProfile = () => {
             ...authHeader(), 
             Accept: 'application/json',
         }
-        let res = await fetch("http://127.0.0.1:5000/api/user/info", {
+        let res = await fetch("https://8getlh855i.execute-api.us-west-2.amazonaws.com/api/user/info", {
           method: "GET",
           headers: headers
         });

@@ -29,7 +29,7 @@ function Sidebar({ selectGroup }) {
         ...authHeader(),
         Accept: "application/json",
       };
-      let res = await fetch("http://127.0.0.1:5000/api/group/list", {
+      let res = await fetch("https://8getlh855i.execute-api.us-west-2.amazonaws.com/api/group/list", {
         method: "GET",
         headers: headers,
       });
@@ -94,7 +94,7 @@ function Sidebar({ selectGroup }) {
         ...authHeader(),
         Content: "application/json",
       };
-      let res = await fetch("http://127.0.0.1:5000/api/group/", {
+      let res = await fetch("https://8getlh855i.execute-api.us-west-2.amazonaws.com/api/group/", {
         method: "POST",
         headers: headers,
         body: JSON.stringify({
@@ -117,7 +117,7 @@ function Sidebar({ selectGroup }) {
         ...authHeader(),
         Accept: "application/json",
       };
-      let res = await fetch("http://127.0.0.1:5000/api/user/list", {
+      let res = await fetch("https://8getlh855i.execute-api.us-west-2.amazonaws.com/api/user/list", {
         method: "GET",
         headers: headers,
       });
@@ -136,7 +136,7 @@ function Sidebar({ selectGroup }) {
         Accept: "application/json",
       };
       console.log(group_id);
-      const url = "http://127.0.0.1:5000/api/group/" + group_id;
+      const url = "https://8getlh855i.execute-api.us-west-2.amazonaws.com/api/group/" + group_id;
       console.log(url);
       let res = await fetch(url, {
         method: "GET",
@@ -158,7 +158,7 @@ function Sidebar({ selectGroup }) {
         ...authHeader(),
         Accept: "application/json",
       };
-      const url = "http://127.0.0.1:5000/api/group/" + group_id;
+      const url = "https://8getlh855i.execute-api.us-west-2.amazonaws.com/api/group/" + group_id;
       await fetch(url, {
         method: "DELETE",
         headers: headers,
@@ -176,7 +176,7 @@ function Sidebar({ selectGroup }) {
       const headers = {
         ...authHeader(),
       };
-      const url = "http://127.0.0.1:5000/api/group/" + groupId;
+      const url = "https://8getlh855i.execute-api.us-west-2.amazonaws.com/api/group/" + groupId;
       await fetch(url, {
         method: "POST",
         headers: headers,

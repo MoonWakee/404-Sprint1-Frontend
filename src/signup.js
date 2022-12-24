@@ -25,7 +25,7 @@ const SignUpForm = () => {
     event.preventDefault();
     try {
       let res = await fetch(
-        "http://127.0.0.1:5000/api/user/signup",
+        "https://8getlh855i.execute-api.us-west-2.amazonaws.com/api/user/signup",
         {
           method: "POST",
           body: JSON.stringify({

@@ -25,7 +25,7 @@ const AddGroupForm = () => {
                 ...authHeader(), 
                 Content: 'application/json',
             }
-            let res = await fetch("http://127.0.0.1:5000/api/group/", {
+            let res = await fetch("https://8getlh855i.execute-api.us-west-2.amazonaws.com/api/group/", {
                 method: "POST",
                 headers: headers,
                 body: JSON.stringify({

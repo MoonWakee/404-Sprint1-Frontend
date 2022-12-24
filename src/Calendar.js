@@ -23,7 +23,7 @@ const CalendarForm = () => {
           Accept: "application/json",
         };
         let res = await fetch(
-          "http://127.0.0.1:5000/api/schedule/group/" + group.group_id,
+          "https://8getlh855i.execute-api.us-west-2.amazonaws.com/api/schedule/group/" + group.group_id,
           {
             method: "GET",
             headers: headers,
